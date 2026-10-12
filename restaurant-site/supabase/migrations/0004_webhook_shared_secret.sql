@@ -1,0 +1,30 @@
+-- Clarifies what Vault secret `edge_function_key` must hold for the DB-webhook
+-- path created in 0003_notification_webhooks.sql. No trigger or function logic
+-- changes here — docs only, safe to apply on top of 0003 anywhere.
+--
+-- The value MUST be a dedicated random shared secret (e.g. `openssl rand -hex 32`),
+-- NOT the project's anon key. The anon key ships to every browser via
+-- VITE_SUPABASE_ANON_KEY, so it is public by design and cannot authenticate the
+-- webhook caller. The Edge Functions verify this secret in code
+-- (supabase/functions/_shared/auth.ts) and reject any direct/anonymous caller
+-- with 401 before doing any work.
+--
+-- One-time setup per project (see README step 6):
+--   1. Generate: openssl rand -hex 32
+--   2. Store for the sender (pg_net trigger):
+--        select vault.create_secret('<that-value>', 'edge_function_key');
+--      If the secret already exists from following the old instructions with the
+--      anon key, find its id and replace it:
+--        select id, name from vault.secrets where name = 'edge_function_key';
+--        select vault.update_secret('<id-from-above>', '<that-value>');
+--   3. Store the SAME value for the receiver (Edge Functions):
+--        supabase secrets set EDGE_FUNCTION_SHARED_SECRET=<that-value>
+--   4. Deploy with gateway JWT verification off so the shared secret reaches the
+--      in-code check:
+--        supabase functions deploy notify-reservation --no-verify-jwt
+--        supabase functions deploy notify-contact-message --no-verify-jwt
+--
+-- Until both sides share the same secret, the functions fail closed (500 when the
+-- env secret is missing, 401 on mismatch) and no notification email is sent.
+
+select 1;

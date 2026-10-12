@@ -1,0 +1,40 @@
+project_id = "restaurant-saas"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "storage", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+major_version = 15
+
+[studio]
+enabled = true
+port = 54323
+
+[auth]
+enabled = true
+site_url = "http://localhost:5173"
+additional_redirect_urls = ["http://localhost:5173"]
+jwt_expiry = 3600
+enable_signup = true
+# PROD: point site_url + additional_redirect_urls at the real domain, set
+# [auth.email] enable_confirmations = true, and enable CAPTCHA + rate limits
+# (see https://supabase.com/docs/guides/auth/auth-captcha and the
+# [auth.rate_limit] section). The local values below stay as-is for `supabase start`.
+
+[auth.email]
+enable_signup = true
+enable_confirmations = false
+# PROD: enable_confirmations = true — open signup without confirmation lets
+# anyone mint auth users and provision tenants (see migrations/0005 notes).
+
+[storage]
+enabled = true
+file_size_limit = "10MiB"
+
+[edge_runtime]
+enabled = true
