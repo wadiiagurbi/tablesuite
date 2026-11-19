@@ -1,22 +1,38 @@
-.env
-.env.local
-.env.dev
-.env.test
-.env.prod
-.env.*.local
-node_modules/
-vendor/
-target/
-.venv/
-venv/
-dist/
-build/
-__pycache__/
-*.pyc
+# Logs
+logs
 *.log
-.obscura-token
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Supabase CLI local state
+supabase/.branches
+supabase/.temp
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# Tool output
+output/
 .playwright-cli/
-.vite/
-*.tsbuildinfo
-.pytest_cache/
-.mypy_cache/
+.obscura-token
