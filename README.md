@@ -41,11 +41,11 @@
 - 🔒 **Row Level Security** keeps tenants apart, enforced by Postgres, not by app code
 - 🪝 **Notifications fire from Postgres webhooks** → Edge Functions → email, so they work even if someone skips the UI
 - 🛡️ **Production hardening:** a locked-down RPC, guards against status forgery, storage policies and a notification delivery log
-- 🧊 **3D demo pages** (pizza, soda, Ember & Oak) built with Three.js / React Three Fiber and `<model-viewer>`
+- 🧊 **3D pizza hero** on the landing page, built with React Three Fiber
 
 <p align="center">
-  <img src="docs/screenshots/pizza-demo.png" width="49%" alt="3D pizza demo page" />
-  <img src="docs/screenshots/soda-demo.png" width="49%" alt="3D soda demo page" />
+  <img src="docs/screenshots/gallery.png" width="49%" alt="Restaurant gallery page" />
+  <img src="docs/screenshots/reservations.png" width="49%" alt="Reservation form" />
 </p>
 
 ## 🏗️ Architecture
@@ -75,7 +75,7 @@ tablesuite/
 │   ├── migrations/       0001 schema+RLS → 0006 analytics & gallery publishing
 │   ├── functions/        email notification Edge Functions
 │   └── seed*.mjs         demo tenants: The Golden Fork, Ember & Oak
-└── public/               3D demo pages + .glb models
+└── public/               favicon, icons, static-host redirects
 ```
 
 ## 🚀 Getting started
